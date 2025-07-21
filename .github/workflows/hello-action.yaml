@@ -11,7 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show System Information
-        run: uname -a
+        run: |
+          echo "Running on $(uname -s) $(uname -r)"
+          echo "Current user: $(whoami)"
+          echo "OS: $RUNNER_OS"
+          echo "Architecture: $RUNNER_ARCH"
       - name: Run a one-line script
         run: echo "Hello, World!"
       - name: Show current date
