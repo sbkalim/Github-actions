@@ -10,5 +10,9 @@ jobs:
   hello-world:
     runs-on: ubuntu-latest
     steps:
+      - name: Show System Information
+        run: uname -a
       - name: Run a one-line script
         run: echo "Hello, World!"
+      - name: Show current date
+        run: date
