@@ -2,6 +2,12 @@ name: Hello World
 
 on:
   workflow_dispatch:
+    inputs:
+      username:
+        description: 'Name to greet'
+        required: false
+        default: 'World'
+
   push:
     branches:
       - main
@@ -25,7 +31,7 @@ jobs:
           echo "OS: $RUNNER_OS"
           echo "Architecture: $RUNNER_ARCH"
       - name: Run a one-line script
-        run: echo "Hello, World!"
+        run: echo Hello ${{ inputs.username }}
       - name: Show current date
         run: date
   checkout-example:
