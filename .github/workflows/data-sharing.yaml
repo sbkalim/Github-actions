@@ -1,0 +1,33 @@
+name:  Concurrency and If Example
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - feature/*
+
+concurrency:
+  group: my-concurrent-group
+  cancel-in-progress: true
+
+jobs:
+  if-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print message if branch is main
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "This is the main branch" > output.txt
+      - name: Print output
+        run: |
+          cat output.txt || echo "No output file found"
+
+  test-file-sharing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print output
+        run: |
+          cat output.txt || echo "No output file found"
