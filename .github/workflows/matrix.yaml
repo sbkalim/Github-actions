@@ -1,0 +1,23 @@
+name: Simple Matrix Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  matrix-example:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14, 16, 18]
+
+    steps:
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Print Node.js version
+        run: node -v
