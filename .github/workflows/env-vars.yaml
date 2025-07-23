@@ -1,0 +1,36 @@
+name: Hello World
+
+env:
+  GLOBAL_VAR: 'workflow-level'
+  REPO_VAR: ${{ vars.REPO_VAR }}
+
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: 'Name to greet'
+        required: false
+        default: 'World'
+
+  push:
+    branches:
+      - main
+
+jobs:
+  hello-world:
+    env:
+      JOB_VAR: 'job-level'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Environment Variables
+        run: |
+          echo "GLOBAL_VAR: $GLOBAL_VAR"
+          echo "JOB_VAR: $JOB_VAR"
+          echo "STEP_VAR: $STEP_VAR"
+        env:
+          STEP_VAR: 'step-level'
+      - name: Access Github repo secrets and vars
+        run: |
+          echo "REPO_VAR: $REPO_VAR"
+          echo "REPO_SECRET: {}" ${{ secrets.REPO_SECRET }}
