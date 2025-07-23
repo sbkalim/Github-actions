@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  if-example:
+  upload-file-sharing:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,14 +20,20 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "This is the main branch" > output.txt
-      - name: Print output
-        run: |
-          cat output.txt || echo "No output file found"
-
-  test-file-sharing:
+      - name: Upload output file
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-file
+          path: output.txt
+  download-file-sharing:
     runs-on: ubuntu-latest
+    needs: [upload-file-sharing]
 
     steps:
+      - name: Download output file
+        uses: actions/download-artifact@v4
+        with:
+          name: output-file
       - name: Print output
         run: |
           cat output.txt || echo "No output file found"
