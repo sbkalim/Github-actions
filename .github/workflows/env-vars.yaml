@@ -33,4 +33,4 @@ jobs:
       - name: Access Github repo secrets and vars
         run: |
           echo "REPO_VAR: $REPO_VAR"
-          echo "REPO_SECRET:  ${{ secrets.REPO_SECRECT }}""
+          echo "REPO_SECRET:  ${{ secrets.REPO_SECRECT }}"
