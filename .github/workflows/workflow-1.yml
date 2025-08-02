@@ -1,0 +1,28 @@
+name: Detect Changed Files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  list-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show changed files since last commit
+        run: |
+          echo "Files changed since last commit:"
+          git diff --name-only HEAD^ HEAD || echo "First commit - nothing to diff"
+
+      - name: Save changed files as artifact
+        run: git diff --name-only HEAD^ HEAD > changed_files.txt || echo "" > changed_files.txt
+
+      - name: Upload changed file list
+        uses: actions/upload-artifact@v4
+        with:
+          name: changed-files
+          path: changed_files.txt

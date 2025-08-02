@@ -1,0 +1,16 @@
+name: Dependent Workflow
+
+on:
+  workflow_run:
+    workflows: ["Detect Changed Files"]
+    types:
+      - completed
+
+jobs:
+  run-after-first:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print message
+        run: echo "This workflow triggered because the previous one completed successfully."
